@@ -46,48 +46,58 @@ void analyze(int cells, int N, Total totals[]) {
     for (int i = 0; i < cells; ++i)
       totals[sum].digits[values[i]]++;
   });
-
-  // Dump it
-
-  for (int total = 1; total <= 45; ++total) {
-    auto &tot = totals[total];
-    std::cout << total << "/" << cells << "  ";
-    std::cout << totals[total].combinations << "  ";
-
-    for (int i = 1; i <= 9; ++i) {
-      std::cout << tot.digits[i] << " ";
-    }
-
-    if (totals[total].combinations) {
-      std::cout << total << "/" << cells << "  ";
-      std::cout << totals[total].combinations << "  ";
-      totals[total].display();
-    }
-    std::cout << std::endl;
-  }
 }
 
+struct formats {
+  const char *row_start, *row_middle, *row_end, *line;
+};
+
 struct Table {
+  const int N;
+
   Total totals[10][46];
 
-  Table(int N) {
+  int maxTotal() const { return N * (N + 1) / 2; }
+
+  Table(int N) : N(N) {
     for (int cells = 1; cells <= N; ++cells) {
       analyze(cells, N, totals[cells]);
     }
   }
+
+  void display(std::ostream &os, const formats &fmt) const {
+    os << "# Killer Sudoku table for N = " << N << std::endl << std::endl;
+
+    os << fmt.row_start;
+    os << "Total \\ Size";
+    for (int i = 1; i <= N; ++i) {
+      os << fmt.row_middle << i;
+    }
+    os << fmt.row_end << std::endl;
+
+    os << fmt.row_start;
+    os << fmt.line;
+    for (int i = 1; i <= N; ++i) {
+      os << fmt.row_middle << fmt.line;
+    }
+    os << fmt.row_end << std::endl;
+
+    int mt = maxTotal();
+    for (int total = 1; total <= mt; ++total) {
+      os << fmt.row_start;
+      os << total;
+      for (int i = 1; i <= N; ++i) {
+        os << fmt.row_middle;
+        totals[i][total].display();
+      }
+      os << fmt.row_end << std::endl;
+    }
+  }
 };
 
-void display(int N) {
-  std::cout << "N = " << N << std::endl;
-  for (int cells = 1; cells <= N; cells++) {
-    Total totals[46];
-    analyze(cells, N, totals);
-  }
-}
-
 int main() {
-  // Table t6(6);
-  Table t9(9);
-  // display(6);
-  // display(9);
+  formats fmt = {"| ", " | ", " |", "---"};
+  Table(6).display(std::cout, fmt);
+  std::cout << std::endl;
+  Table(9).display(std::cout, fmt);
 }
