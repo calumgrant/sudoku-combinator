@@ -17,19 +17,20 @@ struct Total {
   int combinations = 0;
   int digits[10] = {0};
 
-  void display() const {
+  void display(std::ostream &os) const {
     if (combinations == 1) {
       for (int j = 1; j <= 9; ++j) {
         if (digits[j] > 0)
-          std::cout << j;
+          os << j;
       }
     } else if (combinations > 1) {
-      for (int j = 1; j <= 9; ++j) {
+      for (int j = 1; j <= 9; ++j)
+        if (digits[j] == combinations)
+          os << j;
+      os << "\\";
+      for (int j = 1; j <= 9; ++j)
         if (digits[j] == 0)
-          std::cout << "-" << j;
-        else if (digits[j] == combinations)
-          std::cout << "+" << j;
-      }
+          os << j;
     }
   }
 };
@@ -88,7 +89,7 @@ struct Table {
       os << total;
       for (int i = 1; i <= N; ++i) {
         os << fmt.row_middle;
-        totals[i][total].display();
+        totals[i][total].display(os);
       }
       os << fmt.row_end << std::endl;
     }
@@ -96,6 +97,16 @@ struct Table {
 };
 
 int main() {
+  std::cout << "Tables for Killer Sudoku and Kakuro\n\n";
+  std::cout
+      << "Notation: 'Total' gives the sum that the cells should total to.\n";
+  std::cout << "'Size' is the number of cells in the region/row/column.\n";
+  std::cout << "When a cell contains just digits, then this is the unique "
+               "combination.\n";
+  std::cout << "When a cell contains '\\', then there is more than one "
+               "combination. The digits before the '\\' must be present, and "
+               "digits after the '\\' must be absent.\n\n";
+
   formats fmt = {"| ", " | ", " |", "---"};
   Table(6).display(std::cout, fmt);
   std::cout << std::endl;
