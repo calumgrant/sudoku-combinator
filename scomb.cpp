@@ -17,18 +17,18 @@ struct Total {
   int combinations = 0;
   int digits[10] = {0};
 
-  void display(std::ostream &os) const {
+  void display(std::ostream &os, int N) const {
     if (combinations == 1) {
-      for (int j = 1; j <= 9; ++j) {
+      for (int j = 1; j <= N; ++j) {
         if (digits[j] > 0)
           os << j;
       }
     } else if (combinations > 1) {
-      for (int j = 1; j <= 9; ++j)
+      for (int j = 1; j <= N; ++j)
         if (digits[j] == combinations)
           os << j;
       os << "\\";
-      for (int j = 1; j <= 9; ++j)
+      for (int j = 1; j <= N; ++j)
         if (digits[j] == 0)
           os << j;
     }
@@ -89,7 +89,7 @@ struct Table {
       os << total;
       for (int i = 1; i <= N; ++i) {
         os << fmt.row_middle;
-        totals[i][total].display(os);
+        totals[i][total].display(os, N);
       }
       os << fmt.row_end << std::endl;
     }
