@@ -1,11 +1,29 @@
-Tables for Killer Sudoku and Kakuro
+# Tables for Killer Sudoku and Kakuro
 
-Notation: 'Total' gives the sum that the cells should total to.
-'Size' is the number of cells in the region/row/column.
+Notation:
+_Total_ gives the sum of the cells in a region.
+_Size_ is the number of cells in the region/row/column.
+_N_ is the number of digits in the puzzle.
+Each cell describes what digits are possible in a cell of a given size and total.
 When a cell contains just digits, then this is the unique combination.
-When a cell contains '\', then there is more than one combination. The digits before the '\' must be present, and digits after the '\' must be absent.
+When a cell contains `\`, then there is more than one combination. The digits before the `\` must be present, and digits after the `\` must be absent.
 
-# Killer Sudoku table for N = 6
+## Killer Sudoku table for N = 4
+
+| Total \ Size | 1 | 2 | 3 | 4 |
+| --- | --- | --- | --- | --- |
+| 1 | 1 |  |  |  |
+| 2 | 2 |  |  |  |
+| 3 | 3 | 12 |  |  |
+| 4 | 4 | 13 |  |  |
+| 5 |  | \ |  |  |
+| 6 |  | 24 | 123 |  |
+| 7 |  | 34 | 124 |  |
+| 8 |  |  | 134 |  |
+| 9 |  |  | 234 |  |
+| 10 |  |  |  | 1234 |
+
+## Killer Sudoku table for N = 6
 
 | Total \ Size | 1 | 2 | 3 | 4 | 5 | 6 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -31,7 +49,7 @@ When a cell contains '\', then there is more than one combination. The digits be
 | 20 |  |  |  |  | 23456 |  |
 | 21 |  |  |  |  |  | 123456 |
 
-# Killer Sudoku table for N = 9
+## Killer Sudoku table for N = 9
 
 | Total \ Size | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

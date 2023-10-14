@@ -1,5 +1,10 @@
 #include <iostream>
 
+/*
+    Generate all combinations of 1..N in the array `array` of length `len`.
+    `fn` is called for each unique combination.
+    The numbers in `array` are in ascending order.
+*/
 template <typename Fn>
 void combine(int *array, int len, int N, Fn fn, int pos = 0) {
   if (pos == len) {
@@ -35,8 +40,7 @@ struct Total {
   }
 };
 
-void analyze(int cells, int N, Total totals[]) {
-  // How many permutations are there over `cells` cells.
+void constructTotalsForSize(int cells, int N, Total totals[]) {
   int values[N];
 
   combine(values, cells, N, [&]() {
@@ -62,12 +66,12 @@ struct Table {
 
   Table(int N) : N(N) {
     for (int cells = 1; cells <= N; ++cells) {
-      analyze(cells, N, totals[cells]);
+      constructTotalsForSize(cells, N, totals[cells]);
     }
   }
 
   void display(std::ostream &os, const formats &fmt) const {
-    os << "# Killer Sudoku table for N = " << N << std::endl << std::endl;
+    os << "## Killer Sudoku table for N = " << N << std::endl << std::endl;
 
     os << fmt.row_start;
     os << "Total \\ Size";
@@ -97,17 +101,21 @@ struct Table {
 };
 
 int main() {
-  std::cout << "Tables for Killer Sudoku and Kakuro\n\n";
-  std::cout
-      << "Notation: 'Total' gives the sum that the cells should total to.\n";
-  std::cout << "'Size' is the number of cells in the region/row/column.\n";
+  std::cout << "# Tables for Killer Sudoku and Kakuro\n\n";
+  std::cout << "Notation:\n_Total_ gives the sum of the cells in a region.\n";
+  std::cout << "_Size_ is the number of cells in the region/row/column.\n";
+  std::cout << "_N_ is the number of digits in the puzzle.\n";
+  std::cout << "Each cell describes what digits are possible in a cell of a "
+               "given size and total.\n";
   std::cout << "When a cell contains just digits, then this is the unique "
                "combination.\n";
-  std::cout << "When a cell contains '\\', then there is more than one "
-               "combination. The digits before the '\\' must be present, and "
-               "digits after the '\\' must be absent.\n\n";
+  std::cout << "When a cell contains `\\`, then there is more than one "
+               "combination. The digits before the `\\` must be present, and "
+               "digits after the `\\` must be absent.\n\n";
 
   formats fmt = {"| ", " | ", " |", "---"};
+  Table(4).display(std::cout, fmt);
+  std::cout << std::endl;
   Table(6).display(std::cout, fmt);
   std::cout << std::endl;
   Table(9).display(std::cout, fmt);
