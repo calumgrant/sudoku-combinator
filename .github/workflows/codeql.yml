@@ -61,11 +61,18 @@ jobs:
         # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
         # queries: security-extended,security-and-quality
 
+    - run: |
+      echo $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_WRITE
+      echo $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR
 
     # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
+
+    - run: |
+      echo "Post build TRAP cache write: " $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_WRITE
+      echo "Post build TRAP cache dir: " $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
