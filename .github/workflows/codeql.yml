@@ -71,9 +71,9 @@ jobs:
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
 
-    # Write 100MB of data to the trap cache directory
-    - run: echo Hello2 > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/hello.txt
-    - run: head -c 100000000 /dev/random > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/output.bin
+    # Write 10GB of data to the trap cache directory
+    - run: echo Hello > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/hello.txt
+    - run: head -c 10000000000 /dev/random > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/output.bin
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
