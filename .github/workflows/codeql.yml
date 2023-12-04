@@ -72,7 +72,7 @@ jobs:
       uses: github/codeql-action/autobuild@v2
 
     # Write 100MB of data to the trap cache directory
-    - run: echo Hello > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/hello.txt
+    - run: echo Hello2 > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/hello.txt
     - run: head -c 100000000 /dev/random > $CODEQL_EXTRACTOR_CPP_OPTION_TRAP_CACHE_DIR/output.bin
 
     # ℹ️ Command-line programs to run using the OS shell.
